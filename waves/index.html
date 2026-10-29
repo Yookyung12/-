@@ -35,6 +35,26 @@ header{position:sticky;top:0;z-index:25;background:rgba(255,255,255,.96);border-
 .wave-extra-tag{display:inline-block;border-radius:20px;padding:2px 8px;margin-left:5px;background:#ecf0fa;color:#596785;font-size:11px;white-space:nowrap}
 .wave-extra-body{padding:3px 16px 14px;border-top:1px solid #dfebf0}
 .wave-extra-body p{font-size:13px;line-height:1.8;color:#345767;margin:10px 0}
+
+/* 03 수심·파장: 단계형 예시, 교과서 전용 속력, 접혀 있는 전이파 심화 */
+.depth-steps{display:grid;gap:6px;border:1px solid #d5e6ed;background:#f4fafc;border-radius:14px;padding:13px 15px;margin:13px 0;font-size:13px;color:#335b6d}
+.depth-steps b{color:#125d7c}
+.depth-presets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:14px 0 10px}
+.depth-presets button{font-size:12px;padding:10px 7px;white-space:normal;line-height:1.4;min-height:50px}
+.depth-scene{padding:12px 14px;background:#e9f6f8;border-left:4px solid #0b8a9d;border-radius:9px;font-size:13px;line-height:1.7;margin-bottom:13px}
+.depth-primary-result{background:#e5f6f5;border:1px solid #91d0ce;padding:16px;border-radius:15px;margin:14px 0;color:#183f51}
+.depth-result-label{font-size:12px;font-weight:850;color:#19738a}
+.depth-simple-formula{font-size:17px;font-weight:900;margin:8px 0 5px}
+.depth-speed-number{font-size:25px;font-weight:900;letter-spacing:-.4px}
+.depth-primary-result p{margin:9px 0 0;font-size:13px;line-height:1.65}
+.depth-compare-box{padding:14px;border:1px solid #dce5e9;border-radius:13px;margin:12px 0}
+.depth-compare-box>.buttons{display:flex;gap:8px;margin:10px 0}
+.depth-compare-box>.buttons button{flex:1}
+.depth-compare-result{font-size:13px;line-height:1.75;background:#fff7e8;border-radius:10px;padding:12px;color:#695122}
+.depth-equation{text-align:center;background:#f0f6fa;border:1px solid #d0e3ed;border-radius:10px;padding:12px 8px;font-size:16px;font-weight:850;margin:11px 0;overflow-wrap:anywhere}
+.depth-derive{padding-left:22px;margin:10px 0;font-size:13px;line-height:1.85}
+.depth-derive li{margin:7px 0}.depth-extra-foot{font-size:12px!important}
+@media(max-width:650px){.depth-presets{grid-template-columns:1fr}.depth-presets button{min-height:43px}.depth-speed-number{font-size:21px}}
 </style>
 </head>
 <body>
@@ -58,10 +78,68 @@ header{position:sticky;top:0;z-index:25;background:rgba(255,255,255,.96);border-
 <section class="lesson" id="wind"><div class="section-heading"><div><div class="kicker">INVESTIGATE 02 · 1차시 15~30분</div><h2>풍랑과 너울은 왜 다를까?</h2><p>풍속·지속 시간·풍역대를 조절하고, 불규칙한 풍랑이 규칙적인 너울로 변하는 모습을 관찰합니다.</p></div><span class="time">15분</span></div>
 <div class="prompt"><span class="qmark">?</span><div><small>탐구 질문</small><strong>바람이 매우 강하지만 3분만 분다면 큰 풍랑을 만들 수 있을까?</strong></div></div>
 <div class="two"><div class="card"><div class="card-title"><div><h3>바람이 만드는 물결</h3><p>풍랑은 다양한 파장이 합쳐진 불규칙한 물결, 너울은 비교적 규칙적인 물결</p></div><span class="live">개념 모형</span></div><div class="visual"><canvas id="windCanvas" width="900" height="316" aria-label="풍랑과 너울 파형 비교 애니메이션"></canvas></div><div class="buttons"><button id="seaWind" class="btn primary" type="button" aria-pressed="true">풍역대 안 · 풍랑</button><button id="seaSwell" class="btn" type="button" aria-pressed="false">풍역대 밖 · 너울</button></div><div class="result-card"><h4 id="seaType">풍랑: 마루가 불규칙하고 뾰족한 물결</h4><p id="seaDesc">여러 주기와 파장의 파도가 겹쳐 물결이 복잡하게 보입니다. 파도의 크기는 풍속·지속 시간·풍역대에 영향을 받습니다.</p></div><div class="fact">풍역대(fetch)는 바람이 대체로 같은 방향으로 지속해서 부는 <b>해상의 거리 또는 구역</b>을 뜻합니다. 구체적인 수치 예측이 아니라, 변수의 영향을 이해하는 활동입니다.</div></div><div class="card"><div class="card-title"><div><h3>풍랑의 발달 조건 찾기</h3><p>세 가지 요소 중 하나가 작으면 어떻게 될까요?</p></div></div><div class="controls"><div class="control"><div class="row"><label for="windSpeed">풍속</label><output id="windSpeedLabel">12 m/s</output></div><input type="range" id="windSpeed" min="2" max="26" step="1" value="12"><div class="ends"><span>2 m/s</span><span>26 m/s</span></div></div><div class="control"><div class="row"><label for="windHours">지속 시간</label><output id="windHoursLabel">12시간</output></div><input type="range" id="windHours" min="1" max="48" step="1" value="12"><div class="ends"><span>1시간</span><span>48시간</span></div></div><div class="control"><div class="row"><label for="windFetch">풍역대 길이</label><output id="windFetchLabel">200 km</output></div><input type="range" id="windFetch" min="10" max="600" step="10" value="200"><div class="ends"><span>10 km</span><span>600 km</span></div></div></div><div class="result-card"><h4>큰 풍랑으로 발달할 잠재력: <span id="windLevel">보통</span></h4><div style="height:13px;background:#d7e8ee;border-radius:20px;overflow:hidden;margin:12px 0"><div id="windBar" style="width:40%;height:100%;border-radius:20px;background:linear-gradient(90deg,#1fb4b5,#f09c53);transition:width .15s"></div></div><p id="windMessage">다른 요소가 충분하더라도 어느 한 요소가 부족하면 파도가 크게 발달하기 어렵습니다.</p></div><div class="fact warn">발달 잠재력 막대는 <b>정성적 교실 모형</b>입니다. 실제 파고(m)를 예측하는 기상 모델이 아닙니다. 바람이 해파에 계속 에너지를 주려면 보통 풍속이 마루의 이동 속력보다 빨라야 합니다.</div></div></div><div class="notes"><strong>✎ 활동 기록 ②</strong><p>풍속을 25m/s로 높인 뒤 지속 시간을 1시간으로, 풍역대를 10km로 각각 줄여 보세요. 큰 풍랑을 만드는 데 필요한 조건 3가지를 정리하세요.</p><textarea id="noteWind" placeholder="풍속만 커도 충분한가? / 바람이 멎거나 풍역대를 벗어나면 물결은 어떻게 달라질까?"></textarea></div></section>
-<section class="lesson" id="depth"><div class="section-heading"><div><div class="kicker">CALCULATE 03 · 1차시 30~50분</div><h2>수심과 파장이 해파를 바꾼다</h2><p>앞에서 확인한 원운동은 심해파의 입자 운동입니다. 수심이 얕아질수록 원형 궤도가 납작한 타원으로 변하는 것을 확인하고, 수심과 파장의 비로 해파를 구분해 봅시다.</p></div><span class="time">20분</span></div>
-<div class="prompt"><span class="qmark">?</span><div><small>탐구 질문</small><strong>수심 8m 바다에서 파장 200m인 해파는 심해파일까, 천해파일까?</strong></div></div>
-<div class="two"><div class="card"><div class="card-title"><div><h3>수심에 따른 물 입자의 운동</h3><p>노란 점과 점선 궤적: 해수면 가까이는 크게, 깊은 곳에서는 작게 운동</p></div><span class="live">LIVE · 깊이 변화</span></div><div class="visual"><canvas class="depth-canvas" id="depthCanvas" width="900" height="310" aria-label="수심과 파장에 따라 원운동 및 납작한 타원운동을 보이는 물 입자"></canvas></div><div class="metric-row"><div class="metric"><small>수심 h</small><strong id="depthHRead">75 m</strong></div><div class="metric"><small>파장 L</small><strong id="depthLRead">120 m</strong></div><div class="metric em"><small>수심 / 파장</small><strong id="ratioRead">0.625</strong></div></div><div class="result-card"><h4>현재 분류: <span id="regimeName">심해파</span></h4><p id="regimeDesc">h ≥ L/2 이므로 해저면의 영향을 거의 받지 않습니다. 물 입자는 원운동에 가깝고, 운동의 크기는 깊어질수록 급격히 감소합니다.</p></div><table class="comparison"><thead><tr><th>구분</th><th>수심과 파장의 관계</th><th>대표 특징</th></tr></thead><tbody><tr><td>심해파</td><td>h ≥ L/2</td><td>원운동, 속력은 파장에 의존</td></tr><tr><td>전이파</td><td>L/20 &lt; h &lt; L/2</td><td>바닥의 영향이 점차 커짐</td></tr><tr><td>천해파</td><td>h ≤ L/20</td><td>납작한 타원운동, 속력은 수심에 의존</td></tr></tbody></table></div>
-<div class="card"><div class="card-title"><div><h3>수심·파장 실험실</h3><p>먼저 예측하고, 계산 결과를 확인하세요.</p></div></div><div class="controls"><div class="control"><div class="row"><label for="depthH">수심 h</label><output id="depthHLabel">75 m</output></div><input type="range" id="depthH" min="1" max="160" step="1" value="75"><div class="ends"><span>1 m</span><span>160 m</span></div></div><div class="control"><div class="row"><label for="depthL">파장 L</label><output id="depthLLabel">120 m</output></div><input type="range" id="depthL" min="20" max="300" step="10" value="120"><div class="ends"><span>20 m</span><span>300 m</span></div></div></div><div class="formula" id="regimeFormula">심해파: v ≈ √(gL / 2π)</div><div class="smallstat"><span>현재 조건에서의 파의 마루 이동 속력 (선형파 일반식)</span><div class="big-speed" id="actualSpeed">13.67 m/s</div></div><div class="split-list" style="margin-top:10px"><div class="smallstat"><span>심해파 근사</span><b id="deepSpeed">13.68</b><span>m/s</span></div><div class="smallstat"><span>천해파 근사</span><b id="shallowSpeed">27.11</b><span>m/s</span></div><div class="smallstat"><span>현재 적용</span><b id="speedStatus">심해파 근사</b></div></div><div class="fact">심해파: <b>v ≈ √(gL/2π)</b> · 천해파: <b>v ≈ √(gh)</b>. 전이파에서는 두 근사식 중 하나만 적용할 수 없어 일반식을 사용합니다. g = 9.8m/s².</div><div class="buttons"><button id="setDeep" class="btn" type="button">예시: 심해파</button><button id="setMid" class="btn" type="button">예시: 전이파</button><button id="setShallow" class="btn primary" type="button">문제: h=8m, L=200m</button></div></div></div><div class="notes"><strong>✎ 활동 기록 ③</strong><p>수심 8m·파장 200m인 파를 분류하고, 천해파 속력 근사식을 이용해 속력을 구하세요. 수심이 4배가 되면 천해파의 속력은 몇 배가 될까요?</p><textarea id="noteDepth" placeholder="h/L = ... 이므로 ...파 / v = √(9.8×8) ≈ ... m/s / 수심이 4배이면 속력은 ...배"></textarea></div></section>
+<section class="lesson" id="depth">
+ <div class="section-heading"><div><div class="kicker">CALCULATE 03 · 1차시 30~50분</div><h2>수심과 파장에 따라 해파는 어떻게 달라질까?</h2>
+ <p>심해파는 <b>파장</b>, 천해파는 <b>수심</b>에 따라 속력이 달라집니다. 먼저 실제 해파 사례를 고른 다음 변수 하나만 바꿔 비교해 보세요.</p></div><span class="time">20분</span></div>
+ <div class="prompt"><span class="qmark">?</span><div><small>핵심 탐구 질문</small>
+ <strong>바다의 깊이가 2배가 되면 모든 파도가 빨라질까? 파장이 2배가 되면 모든 파도가 빨라질까?</strong></div></div>
+ <div class="two">
+  <div class="card"><div class="card-title"><div><h3>수심에 따른 물 입자의 운동</h3><p>점선 궤도를 관찰하세요. 심해파는 원운동, 천해파는 납작한 타원운동이 특징입니다.</p></div><span class="live">LIVE · 물 입자 운동</span></div>
+   <div class="visual"><canvas class="depth-canvas" id="depthCanvas" width="900" height="310" aria-label="해파 종류에 따른 입자 원운동과 타원운동 비교"></canvas></div>
+   <div class="metric-row"><div class="metric"><small>현재 수심 h</small><strong id="depthHRead">200 m</strong></div><div class="metric"><small>현재 파장 L</small><strong id="depthLRead">120 m</strong></div><div class="metric em"><small>수심 ÷ 파장</small><strong id="ratioRead">1.667</strong></div></div>
+   <div class="result-card"><h4>현재 분류: <span id="regimeName">심해파</span></h4><p id="regimeDesc">수심이 파장의 절반 이상이므로 심해파입니다.</p></div>
+   <table class="comparison"><thead><tr><th>분류</th><th>수심 h와 파장 L</th><th>속력을 좌우하는 주요 요인</th></tr></thead><tbody>
+   <tr><td>심해파</td><td>h ≥ L/2</td><td><b>파장 L</b> · 원운동</td></tr>
+   <tr><td>전이파</td><td>L/20 &lt; h &lt; L/2</td><td>양쪽 영향 · 속력 계산은 심화</td></tr>
+   <tr><td>천해파</td><td>h ≤ L/20</td><td><b>수심 h</b> · 타원운동</td></tr></tbody></table>
+   <div class="fact">기억하기: 파가 <b>심해파인지 천해파인지</b>는 수심 자체가 깊거나 얕아서가 아니라 <b>파장에 비해 얼마나 깊은지(h/L)</b>로 판단합니다.</div>
+  </div>
+  <div class="card"><div class="card-title"><div><h3>수심·파장 탐구 실험실</h3><p>수치를 외워서 입력하지 않아도 됩니다. 아래의 사례부터 시작하세요.</p></div><span class="live">사례 선택 → 비교 실험</span></div>
+   <div class="depth-steps"><div><b>① 사례 선택</b> · 일반 해파인지 쓰나미인지 먼저 선택합니다.</div><div><b>② 현재 분류 확인</b> · 수심을 파장으로 나눠 봅니다.</div><div><b>③ 하나씩 변경</b> · 파장 또는 수심을 2배로 바꿔 속력을 비교합니다.</div></div>
+   <div class="depth-presets" role="group" aria-label="해파 탐구 예시 고르기">
+    <button type="button" class="btn primary" id="setDeep" aria-pressed="true">🌊 일반 해파 · 먼 바다</button>
+    <button type="button" class="btn" id="setShallow" aria-pressed="false">🏖️ 일반 해파 · 얕은 연안</button>
+    <button type="button" class="btn" id="setTsunami" aria-pressed="false">🌐 쓰나미 · 먼 바다</button>
+   </div>
+   <div class="depth-scene" id="depthScene">바람에 의한 파도: 파장 120m · 수심 200m의 예시입니다. 같은 수심에서 파장만 바꿔 보세요.</div>
+   <div class="controls">
+    <div class="control"><div class="row"><label for="depthL">파장 L</label><output id="depthLLabel">120 m</output></div><input type="range" id="depthL" min="40" max="600" step="10" value="120"><div class="ends"><span id="depthLMin">40 m</span><span id="depthLMax">600 m</span></div></div>
+    <div class="control"><div class="row"><label for="depthH">수심 h</label><output id="depthHLabel">200 m</output></div><input type="range" id="depthH" min="5" max="400" step="5" value="200"><div class="ends"><span id="depthHMin">5 m</span><span id="depthHMax">400 m</span></div></div>
+   </div>
+   <div class="depth-primary-result" aria-live="polite"><div class="depth-result-label">교과서 속력 공식 · 현재 조건</div>
+     <div id="regimeFormula" class="depth-simple-formula">심해파: v ≈ √(gL / 2π)</div>
+     <div id="depthSpeed" class="depth-speed-number">13.68 m/s</div>
+     <p id="depthRelation">심해파에서는 수심이 아니라 파장이 속력을 결정합니다.</p>
+   </div>
+   <div class="depth-compare-box"><strong>변수 하나만 바꿔 보기</strong>
+     <div class="buttons"><button type="button" class="btn" id="doubleDepthL">파장만 2배</button><button type="button" class="btn" id="doubleDepthH">수심만 2배</button></div>
+     <div id="depthCompareResult" class="depth-compare-result" aria-live="polite">예측: 어떤 버튼을 누를 때 속력이 변할까요?</div>
+   </div>
+   <div class="fact"><b>핵심:</b> 심해파 속력은 파장의 <b>제곱근</b>에 비례(√L), 천해파 속력은 수심의 <b>제곱근</b>에 비례(√h)합니다. 따라서 관련 변수가 2배면 속력은 약 1.41배, 4배면 2배입니다. g = 9.8m/s².</div>
+   <details class="wave-extra depth-advanced" id="depthAdvanced">
+    <summary>🔎 궁금한 학생만 펼쳐 보기 · 전이파의 속력과 공식은 왜 이렇게 생길까? <span class="wave-extra-tag">교육과정 밖 심화 · 평가 제외</span></summary>
+    <div class="wave-extra-body">
+      <p><b>왜 전이파는 속력 공식이 따로 필요할까요?</b> 심해파에서는 해저면의 영향이 거의 없고, 천해파에서는 해저면의 영향이 강합니다. 전이파는 그 중간이므로 파장과 수심을 <b>둘 다</b> 고려해야 합니다.</p>
+      <p><b>선형 중력파의 일반식</b> · 파고가 작고 수심이 일정한 이상적인 바다에서 다음 관계가 성립합니다.</p>
+      <div class="depth-equation">ω² = gk tanh(kh)</div>
+      <p>ω는 각진동수, k는 파수로서 k=2π/L입니다. tanh는 쌍곡탄젠트 함수입니다. 마루의 이동 속력 v=ω/k이므로 식을 정리하면 다음과 같습니다.</p>
+      <div class="depth-equation">v = √[(gL / 2π) tanh(2πh / L)]</div>
+      <p>현재 설정된 조건의 일반식 속력: <b id="advancedExactSpeed">13.68 m/s</b></p>
+      <p><b>이 식은 왜 성립할까?</b> 물을 거의 압축되지 않는 유체로 가정하고, 물 입자의 운동과 물 표면·해저면에서 성립해야 하는 조건을 동시에 적용하여 파동 해를 구하면 ω²=gk tanh(kh)가 나옵니다. 수심에 따른 물의 움직임과 파의 주기가 함께 고려된 결과입니다.</p>
+      <ol class="depth-derive">
+        <li><b>깊은 바다:</b> kh가 충분히 크면 tanh(kh)≈1입니다. 따라서 v≈√(g/k)=√(gL/2π)가 됩니다. <b>파장에 의존</b>합니다.</li>
+        <li><b>얕은 바다:</b> kh가 충분히 작으면 tanh(kh)≈kh입니다. 따라서 v≈√[(g/k)·kh]=√(gh)가 됩니다. <b>수심에 의존</b>합니다.</li>
+        <li><b>전이파:</b> tanh(kh)를 1 또는 kh로 간단히 바꾸기 어려워 <b>일반식</b>을 사용합니다.</li>
+      </ol>
+      <p class="depth-extra-foot">이 수식의 유도와 전이파 속력 계산은 형성평가에 포함하지 않습니다. 참고: <a href="https://coastal.ceg.tudelft.nl/book/2a_pre_knowledge_waves.html" target="_blank" rel="noopener">TU Delft · Linear wave theory</a></p>
+    </div>
+   </details>
+  </div>
+ </div>
+ <div class="notes"><strong>✎ 활동 기록 ③ · 비교 실험</strong>
+  <p><b>필수 1.</b> ‘일반 해파 · 먼 바다’를 선택하고 파장만 2배로 바꾼 뒤 속력의 변화를 기록하세요. <b>필수 2.</b> ‘쓰나미 · 먼 바다’를 선택하고 수심만 2배로 바꿔 보세요. 어느 변수에 의해 속력이 달라졌나요? <b>추가:</b> 연안 해파는 어떨까요?</p>
+  <textarea id="noteDepth" placeholder="심해파: L=120m → 240m, 속력은 … / 쓰나미: L=500km, h=4km → 8km, 속력은 … / 이유: …"></textarea></div>
+ </section>
 <section class="lesson" id="refraction"><div class="section-heading"><div><div class="kicker">APPLY 04 · 2차시 0~30분</div><h2>연안에서 해파는 왜 휘어질까?</h2><p>먼저 얕아진 부분이 느려지므로 파면 전체가 굽는 '해파 굴절'을 확인합니다.</p></div><span class="time">30분</span></div><div class="prompt"><span class="qmark">?</span><div><small>탐구 질문</small><strong>파도가 해안에 비스듬하게 접근하면 파도 마루가 해안선과 나란해지는 이유는 무엇일까?</strong></div></div>
 <div class="two"><div class="card"><div class="card-title"><div><h3>굴절 실험: 비스듬하게 접근하는 파면</h3><p>색이 연해지는 오른쪽이 얕은 해안입니다. 파의 진행 방향을 보세요.</p></div><span class="live">동일 주기 · 수심 변화</span></div><div class="visual"><canvas class="coast-canvas" id="coastCanvas" width="900" height="360" aria-label="깊은 바다에서 해안으로 다가오며 굴절하는 파의 진행 방향과 마루"></canvas></div><div class="chain"><div class="chain-item"><small>수심</small><strong>얕아짐 ↓</strong></div><div class="chain-item"><small>전파 속력</small><strong>느려짐 ↓</strong></div><div class="chain-item"><small>파장</small><strong>짧아짐 ↓</strong></div><div class="chain-item"><small>파고</small><strong>대체로 증가 ↑</strong></div></div><div class="fact warn">연안에서 파고가 증가하는 경향은 <b>천수 효과</b>이며, 모든 조건에서 계속 커지는 것은 아닙니다. 충분히 가팔라지면 쇄파가 일어납니다. 굴절은 같은 파면의 위치별 속력 차이로 발생합니다.</div></div><div class="card"><div class="card-title"><div><h3>해안 지형을 바꿔 보세요</h3><p>파의 입사각과 수심을 바꾸면 진행 방향이 달라집니다.</p></div></div><div class="controls"><div class="control"><div class="row"><label for="coastAngle">먼바다 입사각 (해안선 법선 기준)</label><output id="coastAngleLabel">40°</output></div><input type="range" id="coastAngle" min="0" max="60" step="5" value="40"><div class="ends"><span>0° · 정면</span><span>60° · 비스듬히</span></div></div><div class="control"><div class="row"><label for="coastDepth">해안 가까운 수심</label><output id="coastDepthLabel">4 m</output></div><input type="range" id="coastDepth" min="2" max="25" step="1" value="4"><div class="ends"><span>2 m</span><span>25 m</span></div></div><div class="control"><div class="row"><label for="wavePeriod">파의 주기 T</label><output id="wavePeriodLabel">8 s</output></div><input type="range" id="wavePeriod" min="5" max="14" step="1" value="8"><div class="ends"><span>5 s</span><span>14 s</span></div></div></div><div class="metric-row"><div class="metric"><small>먼바다 속력</small><strong id="cOffshore">12.2 m/s</strong></div><div class="metric"><small>연안 속력</small><strong id="cOnshore">5.9 m/s</strong></div><div class="metric em"><small>연안 입사각</small><strong id="angleShore">19°</strong></div></div><div class="result-card"><h4>주기는 어떻게 될까?</h4><p>고정된 주기의 파도가 해안으로 전파되는 동안 <b>주기 T는 대체로 일정</b>하고 속력이 줄어들므로, <b>파장 L = vT</b> 역시 짧아집니다.</p></div><div class="predict"><label for="coastPredict">예측하기 · 입사각을 0°로 바꾸면 파의 진행 방향이 어떻게 될까?</label><select id="coastPredict"><option value="">선택하세요</option><option value="0">진행 방향이 크게 휘어진다</option><option value="1">방향이 거의 바뀌지 않는다</option><option value="2">반대 방향으로 되돌아간다</option></select><button type="button" class="btn primary" data-check="coast">예측 확인</button><div class="answer" id="coastFeedback" aria-live="polite"></div></div></div></div><div class="notes"><strong>✎ 활동 기록 ④</strong><p>왜 파도 마루는 해안선과 평행해지려 할까요? 속력·파장·주기·파고라는 단어 중 3개 이상을 사용해 설명하세요.</p><textarea id="noteRefraction" placeholder="먼저 얕은 수심에 들어간 파면 일부는 ... 따라서 파면이 ... / 주기는 ..."></textarea></div></section>
 <section class="lesson" id="hazards"><div class="hazard-spotlight">🌊 새로 추가한 탐구 · <b>폭풍해일과 지진해일</b> · 기압·만조·풍속, 쓰나미 파장·수심 조절</div><div class="section-heading"><div><div class="kicker">INVESTIGATE 05 · 3차시 0~30분</div><h2>폭풍해일과 쓰나미(지진해일)</h2><p>해수면이 높아지는 원인과 파의 진행 속도를 직접 계산하고 비교합니다.</p></div><span class="time">30분</span></div>
@@ -134,7 +212,64 @@ function drawWind(){const c=ctxFor('windCanvas');c.clearRect(0,0,900,316);bg(c,9
 function updateWind(){const wind=n('windSpeed'),hours=n('windHours'),fetch=n('windFetch');$('windSpeedLabel').textContent=wind+' m/s';$('windHoursLabel').textContent=hours+'시간';$('windFetchLabel').textContent=fetch+' km';let A=Math.min(1,wind/24),B=Math.min(1,hours/36),C=Math.min(1,fetch/450),p=Math.cbrt(A*B*C);const rating=p<.39?'낮음':p<.62?'보통':p<.79?'높음':'매우 높음';$('windLevel').textContent=rating;$('windBar').style.width=(p*100).toFixed(0)+'%';const lowest=[['풍속',A],['지속 시간',B],['풍역대',C]].sort((x,y)=>x[1]-y[1])[0][0];$('windMessage').textContent=`세 요소를 함께 고려한 정성적 지표입니다. 현재는 ${lowest} 요소가 상대적으로 제한 요인입니다. (실제 파고 수치와는 무관)`}
 function drawDepth(){const c=ctxFor('depthCanvas');c.clearRect(0,0,900,310);bg(c,900,310);let H=n('depthH'),L=n('depthL'),ratio=H/L;const kh=2*PI*ratio,seaY=88,bottom=274;for(let x=0;x<=900;x+=2){}c.fillStyle='#6cc4d8';c.fillRect(0,seaY,900,bottom-seaY);c.fillStyle='#bea07a';c.fillRect(0,bottom,900,36);c.fillStyle='#e5c6a0';for(let x=15;x<900;x+=68){c.fillRect(x,bottom+5,25,2)};const waveAmp=11;let curve=x=>-waveAmp*Math.cos(x/105-t*1.2);c.beginPath();c.moveTo(0,seaY+curve(0));for(let x=3;x<=900;x+=3)c.lineTo(x,seaY+curve(x));c.strokeStyle='#1283ad';c.lineWidth=4;c.stroke();
  const xs=[130,315,500,685,835];const frac=[.12,.39,.66,.9];let linear=ratio<=.05?1:ratio>=.5?0:1-(ratio-.05)/.45;for(let z=0;z<4;z++){const yy=seaY+(bottom-seaY)*frac[z];for(let x of xs){const dec=ratio>=.5?Math.exp(-2*PI*ratio*frac[z]):Math.exp(-2.2*ratio*frac[z]);const rx=20*dec+(linear*6),ry=Math.max(0,rx*(1-linear*.93)*(1-frac[z])+.2);oval(c,x,yy,rx,ry,'#d4eef5',1.7);let a=t*1.2-x/93;dot(c,x+rx*Math.cos(a),yy+ry*Math.sin(a),5,'#ffed9a')}}label(c,'해수면',18,60);label(c,'해저면',18,299,'#6b4e39');label(c,ratio>=.5?'심해파 · 입자 원운동이 깊어질수록 작아짐':ratio<=.05?'천해파 · 수심 아래로 갈수록 타원운동이 납작해짐':'전이파 · 원운동에서 타원운동으로 변화',314,37,'#106889',15,'center');}
-function updateDepth(){let H=n('depthH'),L=n('depthL'),ratio=H/L;let regime=ratio>=.5?'심해파':ratio<=.05?'천해파':'전이파';let exact=Math.sqrt(g*L/(2*PI)*Math.tanh(2*PI*H/L));let deep=Math.sqrt(g*L/(2*PI)),shallow=Math.sqrt(g*H);$('depthHLabel').textContent=H+' m';$('depthLLabel').textContent=L+' m';$('depthHRead').textContent=H+' m';$('depthLRead').textContent=L+' m';$('ratioRead').textContent=fmt(ratio,3);$('regimeName').textContent=regime;$('actualSpeed').textContent=fmt(exact,2)+' m/s';$('deepSpeed').textContent=fmt(deep,2);$('shallowSpeed').textContent=fmt(shallow,2);$('speedStatus').textContent=regime==='전이파'?'일반식':regime+' 근사';$('regimeDesc').textContent=regime==='심해파'?'h ≥ L/2: 바닥의 영향을 거의 받지 않으며 입자는 거의 원운동합니다. 깊을수록 원이 작아지고 속력은 주로 파장에 따라 달라집니다.':regime==='천해파'?'h ≤ L/20: 바닥의 영향이 강해 입자는 납작한 타원운동을 하며, 바닥에서는 수평 왕복운동에 가깝습니다. 속력은 주로 수심에 따라 달라집니다.':'L/20 < h < L/2: 심해파와 천해파의 중간 상태로, 입자 운동과 속력 모두 수심·파장의 영향을 받습니다.';$('regimeFormula').innerHTML=regime==='심해파'?'심해파: v ≈ √(gL / 2π)<small>바닥 영향이 작은 파의 속력 근사식</small>':regime==='천해파'?'천해파: v ≈ √(gh)<small>바닥 영향을 크게 받는 파의 속력 근사식</small>':'전이파: v = √[(gL / 2π) tanh(2πh / L)]<small>전이파에서 사용하는 선형 중력파 일반식 · 심화</small>'}
+const depthPresets={
+ deep:{label:'일반 해파 · 먼 바다',L:120,h:200,lmin:40,lmax:600,lstep:10,hmin:5,hmax:400,hstep:5,unit:'m',tip:'바람에 의한 파도: 파장 120m · 수심 200m의 예시입니다. 같은 수심에서 파장만 바꿔 보세요.'},
+ shallow:{label:'일반 해파 · 얕은 연안',L:100,h:2,lmin:40,lmax:400,lstep:10,hmin:.5,hmax:15,hstep:.5,unit:'m',tip:'연안의 얕은 바다: 파장 100m · 수심 2m의 단순화 사례입니다. 파장보다 수심에 주목하세요.'},
+ tsunami:{label:'쓰나미 · 먼 바다',L:500000,h:4000,lmin:100000,lmax:1000000,lstep:20000,hmin:500,hmax:11000,hstep:500,unit:'km',tip:'긴 파장의 쓰나미: 파장 500km · 수심 4km입니다. 깊은 바다라도 파장에 비하면 천해파입니다. 일반 해파와 비교해 보세요.'}
+};
+let depthScenario='deep';
+function depthUnits(m){return depthPresets[depthScenario].unit==='km'?(m/1000).toLocaleString('ko-KR',{maximumFractionDigits:1})+' km':m.toLocaleString('ko-KR',{maximumFractionDigits:1})+' m'}
+function classifyDepth(L,h){return h/L>=.5?'심해파':h/L<=.05?'천해파':'전이파'}
+function textbookSpeed(L,h){const kind=classifyDepth(L,h);return kind==='심해파'?Math.sqrt(g*L/(2*PI)):kind==='천해파'?Math.sqrt(g*h):null}
+function formatWaveSpeed(v){return fmt(v,2)+' m/s'+(depthScenario==='tsunami'?' (약 '+Math.round(v*3.6)+' km/h)':'')}
+function setDepthPreset(name){
+ const p=depthPresets[name];depthScenario=name;
+ for(const [id,value,low,high,step] of [['depthL',p.L,p.lmin,p.lmax,p.lstep],['depthH',p.h,p.hmin,p.hmax,p.hstep]]){
+  const el=$(id);el.min=low;el.max=high;el.step=step;el.value=value;
+ }
+ ['deep','shallow','tsunami'].forEach(key=>{
+  const b=$({deep:'setDeep',shallow:'setShallow',tsunami:'setTsunami'}[key]),active=name===key;
+  b.classList.toggle('primary',active);b.setAttribute('aria-pressed',String(active));
+ });
+ $('depthScene').textContent=p.tip;
+ $('depthCompareResult').textContent='예측: 어떤 변수를 2배로 바꿀 때 속력이 변할까요?';
+ updateDepth();
+}
+function updateDepth(){
+ const L=n('depthL'),h=n('depthH'),kind=classifyDepth(L,h),v=textbookSpeed(L,h),ratio=h/L;
+ $('depthHLabel').textContent=depthUnits(h);$('depthLLabel').textContent=depthUnits(L);
+ $('depthHRead').textContent=depthUnits(h);$('depthLRead').textContent=depthUnits(L);
+ $('depthLMin').textContent=depthUnits(Number($('depthL').min));$('depthLMax').textContent=depthUnits(Number($('depthL').max));
+ $('depthHMin').textContent=depthUnits(Number($('depthH').min));$('depthHMax').textContent=depthUnits(Number($('depthH').max));
+ $('ratioRead').textContent=fmt(ratio,4);$('regimeName').textContent=kind;
+ const descriptions={
+ '심해파':'수심이 파장의 절반 이상(h≥L/2)이므로 해저면의 영향이 거의 없습니다. 물 입자는 원운동에 가까우며, 속력은 주로 파장에 의해 결정됩니다.',
+ '천해파':'수심이 파장의 1/20 이하(h≤L/20)이므로 물 입자는 납작한 타원운동을 합니다. 속력은 주로 수심에 의해 결정됩니다.',
+ '전이파':'수심이 파장의 1/20보다 크고 절반보다 작습니다. 바닥의 영향을 부분적으로 받으며, 속력 공식은 교육과정 밖 선택 심화에서만 다룹니다.'
+ };
+ $('regimeDesc').textContent=descriptions[kind];
+ $('regimeFormula').textContent=kind==='심해파'?'심해파: v ≈ √(gL / 2π)':kind==='천해파'?'천해파: v ≈ √(gh)':'전이파: 속력 계산은 선택 심화';
+ $('depthSpeed').textContent=v===null?'교과서 필수 계산 대상 아님':formatWaveSpeed(v);
+ $('depthRelation').textContent=kind==='심해파'?'이 구간에서는 파장을 2배로 바꾸면 속력이 약 1.41배, 수심을 바꿔도 속력은 거의 일정합니다.':kind==='천해파'?'이 구간에서는 수심을 2배로 바꾸면 속력이 약 1.41배, 파장을 바꿔도 속력은 거의 일정합니다.':'전이파의 속력을 수치로 보고 싶다면 아래 심화 설명을 펼쳐 보세요.';
+ const k=2*PI/L,exact=Math.sqrt(g/k*Math.tanh(k*h));
+ $('advancedExactSpeed').textContent=formatWaveSpeed(exact);
+}
+function compareDepth(which){
+ const id=which==='L'?'depthL':'depthH',beforeL=n('depthL'),beforeH=n('depthH'),beforeV=textbookSpeed(beforeL,beforeH);
+ const prev=Number($(id).value),next=prev*2,max=Number($(id).max);
+ if(next>max){$('depthCompareResult').textContent='현재 값의 2배는 슬라이더 최대값을 넘습니다. 다른 사례를 선택하거나 값을 조금 낮춰 보세요.';return}
+ $(id).value=next;updateDepth();
+ const afterL=n('depthL'),afterH=n('depthH'),afterV=textbookSpeed(afterL,afterH);
+ const name=which==='L'?'파장':'수심';
+ const beforeShow=depthUnits(prev),afterShow=depthUnits(next);
+ if(beforeV===null||afterV===null){
+  $('depthCompareResult').textContent=name+'만 '+beforeShow+' → '+afterShow+'로 바꾸었더니 '+classifyDepth(beforeL,beforeH)+'에서 '+classifyDepth(afterL,afterH)+'(으)로 바뀌었습니다. 전이파가 포함되어 교과서 속력 수치 비교는 생략합니다.';
+ }else{
+  const factor=(afterV/beforeV).toFixed(2);
+  const result= Math.abs(afterV/beforeV-1)<.01?'속력은 거의 변하지 않습니다.':'속력이 약 '+factor+'배가 되었습니다.';
+  $('depthCompareResult').textContent=name+'만 '+beforeShow+' → '+afterShow+'로 2배, 다른 변수는 그대로! 속력 '+formatWaveSpeed(beforeV)+' → '+formatWaveSpeed(afterV)+'. '+result;
+ }
+}
 function speedFromPeriod(T,h){const w=2*PI/T;let lo=1e-7,hi=100;for(let i=0;i<110;i++){const k=(lo+hi)/2;if(g*k*Math.tanh(k*h)<w*w)lo=k;else hi=k}const k=(lo+hi)/2;return w/k}
 function updateCoast(){const a=n('coastAngle'),h=n('coastDepth'),T=n('wavePeriod');const c0=speedFromPeriod(T,55),c1=speedFromPeriod(T,h),alpha=Math.asin(Math.sin(a*PI/180)*c1/c0)*180/PI;$('coastAngleLabel').textContent=a+'°';$('coastDepthLabel').textContent=h+' m';$('wavePeriodLabel').textContent=T+' s';$('cOffshore').textContent=fmt(c0)+' m/s';$('cOnshore').textContent=fmt(c1)+' m/s';$('angleShore').textContent=fmt(alpha,1)+'°';}
 function drawCoast(){const c=ctxFor('coastCanvas');c.clearRect(0,0,900,360);bg(c,900,360,'#e9f7fa','#9fd7e1');c.fillStyle='#a7dbe6';c.fillRect(0,0,900,360);for(let x=0;x<900;x+=8){const v=x/900;c.fillStyle=`rgba(255,255,255,${(.04+.36*v)})`;c.fillRect(x,0,8,360)}c.fillStyle='#ebd5af';c.fillRect(830,0,70,360);line(c,830,0,830,360,'#bca574',5);label(c,'해안선',850,32,'#76512b',17);
@@ -163,7 +298,7 @@ function gradeQuiz(){let answered=choices.filter(x=>x>=0).length;if(answered!==q
 function download(){const lines=['지구시스템과학 해파 학생참여형 탐구 기록','작성일: '+new Date().toLocaleDateString('ko-KR'),'','① 마루·골·파고·파장, 물 입자 운동',$('noteWave').value||'(미작성)','','② 풍랑과 너울 · 풍속/지속시간/풍역대',$('noteWind').value||'(미작성)','','③ 파장과 수심에 따른 분류 · 해파 속력',$('noteDepth').value||'(미작성)','','④ 연안에서의 해파 굴절',$('noteRefraction').value||'(미작성)','','⑤ 폭풍해일',$('noteSurge').value||'(미작성)','','⑥ 쓰나미',$('noteTsunami').value||'(미작성)','','형성평가',...questions.map((q,i)=>`${i+1}. ${q.q}\n  학생 답: ${choices[i]>=0?q.a[choices[i]]:'(미응답)'}${graded?' / '+(choices[i]===q.c?'정답':'오답'):''}`),'',graded?'점수: '+questions.filter((q,i)=>choices[i]===q.c).length+' / '+questions.length:'(미채점)'];const blob=new Blob(['\ufeff'+lines.join('\n')],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='지구시스템과학_해파_탐구활동_기록.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
 function updateSurge(){const d=n('pressureDrop'),y=166-.48*d;$('pressureDropRead').textContent=d+' hPa';$('surgeRise').textContent='약 '+d+'cm 상승';$('surgeGraphic').textContent='기압 효과 +'+d+'cm';$('surgeWater').setAttribute('y',y);$('surgeWater').setAttribute('height',230-y);$('surgeLine').setAttribute('d','M0 '+y+' H430');$('surgeResult').textContent=($('tidePhase').value==='high'?'만조여서 기본 수위가 높고 ':'간조로 기본 수위가 상대적으로 낮지만 ')+($('onshoreWind').value==='yes'?'해안 방향 강풍이 수위를 더 높일 수 있습니다.':'해안 방향 강풍이 없다고 가정합니다.')+' 실제 폭풍해일의 전체 높이는 이 계산만으로 결정되지 않습니다.'}
 function tsunamiClass(L,h){return h/L<=.05?'shallow':h/L>=.5?'deep':'middle'}
-function updateTsu(){const L=n('tsunamiLength'),h=n('tsunamiDepth'),kind=tsunamiClass(L,h),v=Math.sqrt(9.8*h*1000)*3.6,k=2*Math.PI/(L*1000),exact=Math.sqrt(9.8*Math.tanh(k*h*1000)/k)*3.6;$('tsunamiLengthRead').textContent=L+'km';$('tsunamiDepthRead').textContent=h+'km';$('tsuRatio').textContent=(h/L).toFixed(3);$('tsuLimit').textContent=(L/20).toFixed(1)+'km';$('tsuVelocity').textContent=Math.round(v)+'km/h';$('tsuRegime').textContent={shallow:'천해파',middle:'전이파',deep:'심해파'}[kind];$('tsuComment').textContent='h/L='+(h/L).toFixed(3)+'이므로 '+$('tsuRegime').textContent+'입니다. 천해파 근사 속도는 '+Math.round(v)+'km/h이고, 선형 분산식 계산 속도는 약 '+Math.round(exact)+'km/h입니다.';$('tsuAnswer').value='';$('tsuFeedback').textContent='';$('tsuFeedback').className='answer'}
+function updateTsu(){const L=n('tsunamiLength'),h=n('tsunamiDepth'),kind=tsunamiClass(L,h),v=Math.sqrt(9.8*h*1000)*3.6;$('tsunamiLengthRead').textContent=L+'km';$('tsunamiDepthRead').textContent=h+'km';$('tsuRatio').textContent=(h/L).toFixed(3);$('tsuLimit').textContent=(L/20).toFixed(1)+'km';$('tsuVelocity').textContent=Math.round(v)+'km/h';$('tsuRegime').textContent={shallow:'천해파',middle:'전이파',deep:'심해파'}[kind];$('tsuComment').textContent='h/L='+(h/L).toFixed(3)+'이므로 '+$('tsuRegime').textContent+'입니다. 쓰나미는 긴 파장으로 인해 천해파 속도식 √(gh)를 자주 근사 적용하며, 이 계산은 약 '+Math.round(v)+'km/h입니다. 전이파의 정확한 속도 일반식은 03번 선택 심화에서만 확인합니다.';$('tsuAnswer').value='';$('tsuFeedback').textContent='';$('tsuFeedback').className='answer'}
 ['pressureDrop','tidePhase','onshoreWind'].forEach(id=>$(id).addEventListener('input',updateSurge));
 ['tsunamiLength','tsunamiDepth'].forEach(id=>$(id).addEventListener('input',updateTsu));
 [['tsuCase1',200,11],['tsuCase2',300,11],['tsuCase3',200,4]].forEach(([id,L,h])=>$(id).addEventListener('click',()=>{$('tsunamiLength').value=L;$('tsunamiDepth').value=h;updateTsu()}));
@@ -174,10 +309,10 @@ function listening(id,fn){$(id).addEventListener('input',fn)}
 $('waveTerms').addEventListener('click',e=>{let v=e.currentTarget.getAttribute('aria-pressed')!=='true';e.currentTarget.setAttribute('aria-pressed',String(v));e.currentTarget.textContent=v?'마루·골·파고·파장 숨기기':'마루·골·파고·파장 표시'});$('wavePause').addEventListener('click',()=>{paused=!paused;$('wavePause').textContent=paused?'▶ 재생':'⏸ 일시정지'});
 ['windSpeed','windHours','windFetch'].forEach(id=>listening(id,updateWind));
 function setWindMode(windy){$('seaWind').className='btn'+(windy?' primary':'');$('seaSwell').className='btn'+(!windy?' primary':'');$('seaWind').setAttribute('aria-pressed',String(windy));$('seaSwell').setAttribute('aria-pressed',String(!windy));$('seaType').textContent=windy?'풍랑: 마루가 불규칙하고 뾰족한 물결':'너울: 풍역대 밖의 둥글고 규칙적인 물결';$('seaDesc').textContent=windy?'여러 파장의 해파가 겹쳐 불규칙한 파형을 이룹니다. 풍속·지속 시간·풍역대가 중요합니다.':'풍역대를 벗어나도 해파는 에너지를 전달하며 전파됩니다. 서로 다른 주기의 파들이 분리되면서 비교적 규칙적인 너울로 관찰됩니다.'}
-$('seaWind').addEventListener('click',()=>setWindMode(true));$('seaSwell').addEventListener('click',()=>setWindMode(false));['depthH','depthL'].forEach(id=>listening(id,updateDepth));[['setDeep',75,120],['setMid',25,120],['setShallow',8,200]].forEach(([id,h,L])=>$(id).addEventListener('click',()=>{$('depthH').value=h;$('depthL').value=L;updateDepth()}));['coastAngle','coastDepth','wavePeriod'].forEach(id=>listening(id,updateCoast));document.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>check(b.dataset.check)));$('grade').addEventListener('click',()=>{document.querySelectorAll('.feedback').forEach(x=>x.remove());gradeQuiz()});$('resetQuiz').addEventListener('click',()=>{choices.fill(-1);graded=false;renderQuiz();$('scoreBox').className='score'});['downloadTop','downloadBottom'].forEach(id=>$(id).addEventListener('click',download));$('printTop').addEventListener('click',()=>window.print());
+$('seaWind').addEventListener('click',()=>setWindMode(true));$('seaSwell').addEventListener('click',()=>setWindMode(false));['depthH','depthL'].forEach(id=>listening(id,()=>{updateDepth();$('depthCompareResult').textContent='직접 조절했습니다. 분류와 속력을 확인한 뒤 한 변수만 변경해 비교해 보세요.'}));[['setDeep','deep'],['setShallow','shallow'],['setTsunami','tsunami']].forEach(([id,key])=>$(id).addEventListener('click',()=>setDepthPreset(key)));$('doubleDepthL').addEventListener('click',()=>compareDepth('L'));$('doubleDepthH').addEventListener('click',()=>compareDepth('H'));['coastAngle','coastDepth','wavePeriod'].forEach(id=>listening(id,updateCoast));document.querySelectorAll('[data-check]').forEach(b=>b.addEventListener('click',()=>check(b.dataset.check)));$('grade').addEventListener('click',()=>{document.querySelectorAll('.feedback').forEach(x=>x.remove());gradeQuiz()});$('resetQuiz').addEventListener('click',()=>{choices.fill(-1);graded=false;renderQuiz();$('scoreBox').className='score'});['downloadTop','downloadBottom'].forEach(id=>$(id).addEventListener('click',download));$('printTop').addEventListener('click',()=>window.print());
 window.addEventListener('scroll',()=>{const d=document.documentElement;$('readingBar').style.width=(100*window.scrollY/Math.max(1,d.scrollHeight-window.innerHeight))+'%'},{passive:true});
 if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){paused=true;$('wavePause').textContent='▶ 재생'}
-renderQuiz();updateWind();updateDepth();updateCoast();updateSurge();updateTsu();requestAnimationFrame(tick);
+renderQuiz();updateWind();setDepthPreset('deep');updateCoast();updateSurge();updateTsu();requestAnimationFrame(tick);
 })();
 </script>
 </body>
